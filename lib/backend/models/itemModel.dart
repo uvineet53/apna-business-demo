@@ -32,14 +32,14 @@ class ItemModel {
         createdAt: DateTime.parse(json["created_at"]),
         createdAtI: json["created_at_i"],
         type: json["type"],
-        author: json["author"],
+        author: json["author"] == null ? "anonymous" : json["author"],
         title: json["title"] == null ? "" : json["title"],
         url: json["url"] == null ? "" : json["url"],
         text: json["text"] == null ? "" : json["text"],
         points: json["points"] == null ? 0 : json["points"],
         parentId: json["parent_id"] == null ? 0 : json["parent_id"],
         storyId: json["story_id"] == null ? 0 : json["story_id"],
-        children: json["children"] == null
+        children: json["children"] != null
             ? List<ItemModel>.from(
                 json["children"].map((x) => ItemModel.fromJson(x)))
             : [],

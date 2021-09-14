@@ -6,9 +6,17 @@ class SearchController extends GetxController {
   final SearchRepository _repository = SearchRepository();
   final Rxn<SearchModel> _subject = Rxn<SearchModel>();
   Rxn<SearchModel> get subject => _subject;
+  bool isLoading = false;
 
-  void getResults(String? query) async {
+  updateLoadingState() {
+    isLoading = !isLoading;
+    update();
+  }
+
+  Future<void> getResults(String? query) async {
+    updateLoadingState();
     SearchModel response = await _repository.getResults(query: query);
     _subject.value = response;
+    updateLoadingState();
   }
 }

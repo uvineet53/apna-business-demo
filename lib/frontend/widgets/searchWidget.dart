@@ -12,6 +12,12 @@ Form searchWidget(
     child: TextFormField(
       controller: searchtextController,
       style: TextStyle(fontSize: 18),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Search Field can't be empty";
+        }
+        return null;
+      },
       decoration: InputDecoration(
           hintText: "search anything",
           border: InputBorder.none,
@@ -22,8 +28,10 @@ Form searchWidget(
               color: Vx.black,
               size: 22,
             ),
-            onPressed: () {
-              controller.getResults(searchtextController.text);
+            onPressed: () async {
+              if (searchFormkey.currentState!.validate()) {
+                await controller.getResults(searchtextController.text);
+              }
             },
           )),
     ).py4().box.gray200.px12.rounded.make(),
